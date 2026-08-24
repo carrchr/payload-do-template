@@ -17,7 +17,7 @@ Dependencies will install into a named Docker volume, not your local `node_modul
 **NOTE!!:** prepend node/pnpm commands with `docker compose exec payload`, e.g. `docker compose exec payload pnpm add some-package`.
 
 To get full TypeScript support in your editor/IDE, you'll want to install node dependencies locally, too.
-* Install Node.js `v22.17.0` (or 22.something) - it's recommended to use a version manager (`nodenv` or `nvm`, `asdf`, etc.) 
+* Install Node.js `v22.23.1` (or 22.something) - it's recommended to use a version manager (`nodenv` or `nvm`, `asdf`, etc.) 
 * `npm i -g pnpm` and `pnpm install` 
 * unfortunately the `node_modules` don't stay "in sync" automatically with those shared via Docker
 
