@@ -29,8 +29,13 @@ services:
       branch: main
       deploy_on_push: true
     environment_slug: node-js
-    build_command: pnpm build
-    run_command: pnpm start
+    # Split across build vs. run because App Platform's build step has no
+    # database access but the run step does (see shared_envs comment below
+    # and README's "A platform limitation worth knowing"): compile now,
+    # then generate the static pages once the container starts and can
+    # reach Postgres, before next start begins serving traffic.
+    build_command: pnpm build:compile
+    run_command: pnpm build:generate && pnpm start
     http_port: 3000
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
@@ -39,8 +44,9 @@ services:
     envs: &shared_envs
       # App Platform builds (buildpack or Dockerfile) never have database
       # access — DO's own guidance is not to rely on DB connectivity during
-      # build. generateStaticParams in the frontend routes was changed to
-      # skip its DB query for this reason, so RUN_TIME is all this needs.
+      # build. The web service's run_command does the DB-dependent static
+      # generation pass instead (see build_command/run_command above), so
+      # RUN_TIME is all this needs.
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${payload-do-template-db.DATABASE_URL}

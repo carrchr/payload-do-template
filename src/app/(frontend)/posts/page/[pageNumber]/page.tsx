@@ -70,9 +70,22 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 export async function generateStaticParams() {
-  // DigitalOcean App Platform builds have no database access (see
-  // .do/app.yaml), so page counts can't be queried at build time here.
-  // dynamicParams defaults to true, so each page number renders on
-  // first request instead, then follows the `revalidate = 600` above.
-  return []
+  const payload = await getPayload({ config: configPromise })
+  const { totalDocs } = await payload.count({
+    collection: 'posts',
+    overrideAccess: false,
+  })
+
+  // 12, matching the `limit: 12` used above and in posts/page.tsx — the
+  // stock template's `/ 10` here doesn't match its own page size and can
+  // generate a phantom last page that 404s.
+  const totalPages = Math.ceil(totalDocs / 12)
+
+  const pages: { pageNumber: string }[] = []
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push({ pageNumber: String(i) })
+  }
+
+  return pages
 }

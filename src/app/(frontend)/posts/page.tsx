@@ -8,11 +8,7 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 
-// force-dynamic, not force-static: App Platform builds have no database
-// access (see .do/app.yaml), so this can't be pre-rendered at build time.
-// Rendered per-request instead; afterChange revalidation hooks don't apply
-// here since there's no cached route to invalidate.
-export const dynamic = 'force-dynamic'
+export const revalidate = 600
 
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
