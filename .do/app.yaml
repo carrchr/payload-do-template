@@ -4,18 +4,18 @@ envs:
   - key: PAYLOAD_SECRET
     scope: RUN_AND_BUILD_TIME
     type: SECRET
-    value: REPLACE_ME
+    value: EV[1:A5lg9VH5NW9Zsr/9dlH5DNTfwciO2nAQ:p8pVg8lvi1vz8MoDM4cuUhBWepWR4i9Gpf6LWaWtbd0gJ159nslEAM2WcC64QpaXVije7V/50uTojaUY]
   - key: NEXT_PUBLIC_SERVER_URL
     scope: RUN_AND_BUILD_TIME
     value: ${APP_URL}
   - key: CRON_SECRET
     scope: RUN_AND_BUILD_TIME
     type: SECRET
-    value: REPLACE_ME
+    value: EV[1:hOz68Jnsi65ts3tHw+csh5gcHanrfAu6:xqMk87ELOthpHCpyldxUPY3Ao5dNNo3ZUHbF77yHBpSHt/j+4YpL5QY5thvE++moK10DEGbRzi4bW0VI]
   - key: PREVIEW_SECRET
     scope: RUN_AND_BUILD_TIME
     type: SECRET
-    value: REPLACE_ME
+    value: EV[1:IlNMrGSeS5tizmynZpDEqYM3w7oZA/Y2:7zkOy7hlxah5ADmQIXCex8E6hsPz5DGO7ZL++nTGbj0ebddZdau3MItt2ma2Cf/RtWk/w9CrmrU6mYO9]
 
 databases:
   - name: payload-do-template-db
@@ -52,17 +52,17 @@ services:
       - key: SPACES_KEY_ID
         scope: RUN_TIME
         type: SECRET
-        value: REPLACE_ME
+        value: EV[1:42hygxVwoNRVZOed0FN841Msr4IblQyZ:lh9RuqKp0kkAN6v1GN/5Gtc1wHqxy/HR/U9Y4CYdbv1Kcnqj]
       - key: SPACES_SECRET_KEY
         scope: RUN_TIME
         type: SECRET
-        value: REPLACE_ME
+        value: EV[1:tjrOHo4nuK+SLKFMqvxgMXe5O4attxye:KP8+LunuJbLlWjSN3Vwp1goz0wPNQC9/DYrtLOo18yKU/13z8GhVrBEdBXZ9be0NE4ouLzBOs/evwGw=]
       - key: SPACES_BUCKET_NAME
         scope: RUN_TIME
-        value: REPLACE_ME
+        value: payload-do-template
       - key: SPACES_REGION
         scope: RUN_TIME
-        value: REPLACE_ME
+        value: nyc3
 
 jobs:
   - name: migrate
