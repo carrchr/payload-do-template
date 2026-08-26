@@ -14,12 +14,27 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  // DigitalOcean App Platform builds have no database access (see
-  // .do/app.yaml), so pages can't be pre-rendered at build time here.
-  // dynamicParams defaults to true, so each page renders on first
-  // request instead and is cached/revalidated the same way afterward
-  // (see revalidatePage.ts).
-  return []
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'pages',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
+
+  const params = pages.docs
+    ?.filter((doc) => {
+      return doc.slug !== 'home'
+    })
+    .map(({ slug }) => {
+      return { slug }
+    })
+
+  return params
 }
 
 type Args = {
